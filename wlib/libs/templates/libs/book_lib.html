@@ -6,18 +6,19 @@
   <tr>
     <th>Title</th>
     <th>Author</th>
-    <th>Publish date</th>
+    <th>Publish year</th>
+    <th>Status</th>
   </tr>
+  {% for book in books %}
+
   <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.publish_year }}</td>
+      <td>{{ book.get_status_display }}</td>
   </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
+
+  {% endfor %}
 </table> 
 
 {% endblock content %}

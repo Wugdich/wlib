@@ -8,6 +8,7 @@
         {{ form.as_p }}
 
         <input type="submit" value="Add" />
+        <a href="{% url 'delete-book' book.pk %}">Delete this book</a>
     </form>
 </div>
 

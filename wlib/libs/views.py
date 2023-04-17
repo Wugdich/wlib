@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.db.models import Q
 
 from . import forms
 from . import models
@@ -12,7 +13,14 @@ def home(request):
 
 
 def book_lib(request):
-    books = models.Book.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') else ''
+    query = (
+            Q(title__icontains=q) |
+            Q(author__icontains=q) |
+            Q(publish_year__icontains=q) |
+            Q(status__icontains=q)  # TODO: not correct search for status field
+            )
+    books = models.Book.objects.filter(query)
     context = {
             'books': books,
             }

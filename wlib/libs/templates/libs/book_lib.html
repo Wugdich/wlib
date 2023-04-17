@@ -2,27 +2,47 @@
 
 {% block content %}
 
-<a href="{% url 'add-book' %}">Add new book</a>
+<style>
+    .lib-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+</style>
 
- <table>
-  <tr>
-      <th>id</th>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Publish year</th>
-      <th>Status</th>
-  </tr>
-  {% for book in books %}
+<div class="lib-container">
 
-  <tr>
-      <td><a href="{% url 'update-book' book.pk %}">{{ book.pk }}</a></td>
-      <td>{{ book.title }}</td>
-      <td>{{ book.author }}</td>
-      <td>{{ book.publish_year }}</td>
-      <td>{{ book.get_status_display }}</td>
-  </tr>
+    <div>
+        <a href="{% url 'add-book' %}">Add new book</a>
 
-  {% endfor %}
-</table> 
+        <a href="{% url 'book-lib' %}">All books</a>
+        <form method='GET' action={% url 'book-lib' %}>
+            <input name='q' type='text' placeholder='Search for books..'/>
+        </form>
+        <hr>
+    </div>
 
+    <div>
+         <table>
+          <tr>
+              <th>id</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Publish year</th>
+              <th>Status</th>
+          </tr>
+          {% for book in books %}
+
+          <tr>
+              <td><a href="{% url 'update-book' book.pk %}">{{ book.pk }}</a></td>
+              <td>{{ book.title }}</td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.publish_year }}</td>
+              <td>{{ book.get_status_display }}</td>
+          </tr>
+
+          {% endfor %}
+        </table> 
+    </div>
+
+</div>
 {% endblock content %}

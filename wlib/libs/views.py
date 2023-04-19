@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.db.models import Q
@@ -17,7 +18,7 @@ def home(request):
 
 def loginPage(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
         user = authenticate(
                 request,
@@ -36,6 +37,21 @@ def loginPage(request):
 def logoutPage(request):
     logout(request)
     return redirect('home')
+
+def registerPage(request):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+    context = {
+            'form': form,
+            }
+    return render(request, 'libs/register_page.html', context)
 
 @login_required(login_url='login-page')
 def libs(request):

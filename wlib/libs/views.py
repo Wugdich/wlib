@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.db.models import Q
@@ -36,11 +37,13 @@ def logoutPage(request):
     logout(request)
     return redirect('home')
 
+@login_required(login_url='login-page')
 def libs(request):
     context = {
             }
     return render(request, 'libs/libs.html', context)
 
+@login_required(login_url='login-page')
 def book_lib(request):
     q = request.GET.get('q') if request.GET.get('q') else ''
     query = (
@@ -55,6 +58,7 @@ def book_lib(request):
             }
     return render(request, 'libs/book_lib.html', context)
 
+@login_required(login_url='login-page')
 def addBook(request):
     form = forms.BookForm()
     if request.method == 'POST':
@@ -68,6 +72,7 @@ def addBook(request):
             }
     return render(request, 'libs/book_form.html', context)
 
+@login_required(login_url='login-page')
 def updateBook(request, pk):
     book = models.Book.objects.get(id=pk)
     form = forms.BookForm(instance=book)
@@ -84,6 +89,7 @@ def updateBook(request, pk):
             }
     return render(request, 'libs/book_form.html', context)
 
+@login_required(login_url='login-page')
 def deleteBook(request, pk):
     book = models.Book.objects.get(id=pk)
     if request.method == 'POST':
@@ -95,11 +101,13 @@ def deleteBook(request, pk):
             }
     return render(request, 'delete.html', context)
 
+@login_required(login_url='login-page')
 def game_lib(request):
     context = {
             }
     return render(request, 'libs/game_lib.html', context)
 
+@login_required(login_url='login-page')
 def movie_lib(request):
     context = {
             }

@@ -1,14 +1,15 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.db.models import Q
-from django.contrib.auth.models import User
 
 from . import forms
 from . import models
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('libs')
     context = {
             }
     return render(request, 'home.html', context)
@@ -30,6 +31,10 @@ def loginPage(request):
     context = {
             }
     return render(request, 'libs/login_page.html', context)
+
+def logoutPage(request):
+    logout(request)
+    return redirect('home')
 
 def libs(request):
     context = {

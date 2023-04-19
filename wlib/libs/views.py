@@ -1,16 +1,40 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
+from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 from . import forms
 from . import models
 
-# Create your views here.
 
 def home(request):
     context = {
             }
-    return render(request, 'libs/home.html', context)
+    return render(request, 'home.html', context)
 
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(
+                request,
+                username=username,
+                password=password,
+                )
+        if user:
+            login(request, user)
+            return redirect('libs')
+        else:
+            messages.error(request, "Wrong username or password") 
+    context = {
+            }
+    return render(request, 'libs/login_page.html', context)
+
+def libs(request):
+    context = {
+            }
+    return render(request, 'libs/libs.html', context)
 
 def book_lib(request):
     q = request.GET.get('q') if request.GET.get('q') else ''

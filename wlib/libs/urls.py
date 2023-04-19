@@ -7,6 +7,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', views.home, name='home'),
+    path('login-page', views.loginPage, name='login-page'),
+
+    path('libs', views.libs, name='libs'),
+
     path('game-lib', views.game_lib, name='game-lib'),
     path('movie-lib', views.movie_lib, name='movie-lib'),
 

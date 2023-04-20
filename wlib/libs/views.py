@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import redirect, render
+from django.shortcuts import HttpResponse, redirect, render
 from django.contrib import messages
 from django.db.models import Q
 
@@ -68,7 +68,7 @@ def book_lib(request):
             Q(publish_year__icontains=q) |
             Q(status__icontains=q)  # TODO: not correct search for status field
             )
-    books = models.Book.objects.filter(query)
+    books = models.Book.objects.filter(query).filter(user=request.user)
     context = {
             'books': books,
             }
@@ -80,7 +80,9 @@ def addBook(request):
     if request.method == 'POST':
         form = forms.BookForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_book = form.save(commit=False)
+            new_book.user = request.user
+            new_book.save()
         return redirect('book-lib')
 
     context = {
@@ -91,6 +93,10 @@ def addBook(request):
 @login_required(login_url='login-page')
 def updateBook(request, pk):
     book = models.Book.objects.get(id=pk)
+
+    if book.user != request.user:
+        return HttpResponse("You're not allowed here!")
+
     form = forms.BookForm(instance=book)
 
     if request.method == 'POST':
@@ -108,6 +114,10 @@ def updateBook(request, pk):
 @login_required(login_url='login-page')
 def deleteBook(request, pk):
     book = models.Book.objects.get(id=pk)
+
+    if book.user != request.user:
+        return HttpResponse("You're not allowed here!")
+
     if request.method == 'POST':
         book.delete()
         return redirect('book-lib')

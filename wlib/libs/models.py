@@ -1,4 +1,5 @@
 import datetime
+from django.contrib.auth.models import User
 
 from django.db import models
 
@@ -7,6 +8,7 @@ def current_year() -> int:
 
 
 class Book(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
     author = models.CharField(max_length=30)
     publish_year = models.PositiveIntegerField(
@@ -33,6 +35,7 @@ class Book(models.Model):
 
 
 class Game(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
     release_date = models.DateField()
     developer = models.CharField(max_length=30)
@@ -43,6 +46,7 @@ class Game(models.Model):
 
 
 class Movie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
     release_date = models.DateField()
     director = models.CharField(max_length=30)

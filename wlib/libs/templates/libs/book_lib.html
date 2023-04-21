@@ -14,8 +14,8 @@
     <div>
         <h2>Tools</h2>
         <a href="{% url 'add-book' %}">Add new book</a>
-        <a href="{% url 'book-lib' %}">All books</a>
-        <form method='GET' action={% url 'book-lib' %}>
+        <a href="{% url 'book-lib' request.user.username %}">All books</a>
+        <form method='GET' action={% url 'book-lib' request.user.username %}>
             <input name='q' type='text' placeholder='Search for books..'/>
         </form>
         <hr>

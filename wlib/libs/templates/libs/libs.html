@@ -3,7 +3,7 @@
 {% block content %}
 
 <div>
-    <a href="{% url 'book-lib' %}"><h2>Your book library</h2></a>
+    <a href="{% url 'book-lib' request.user.username %}"><h2>Your book library</h2></a>
 </div>
 
 {% endblock content %}

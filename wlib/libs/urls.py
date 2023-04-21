@@ -17,8 +17,4 @@ urlpatterns = [
     path('book-lib/add-book/', views.addBook, name='add-book'),
     path('book-lib/update-book/<str:pk>/', views.updateBook, name='update-book'),
     path('book-lib/delete-book/<str:pk>/', views.deleteBook, name='delete-book'),
-
-    path('game-lib', views.game_lib, name='game-lib'),
-    path('movie-lib', views.movie_lib, name='movie-lib'),
-
 ]

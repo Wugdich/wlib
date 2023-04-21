@@ -32,37 +32,3 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Game(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=30)
-    release_date = models.DateField()
-    developer = models.CharField(max_length=30)
-    hours_played = models.FloatField()
-
-    def __str__(self):
-        return self.title
-
-
-class Movie(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=30)
-    release_date = models.DateField()
-    director = models.CharField(max_length=30)
-
-    # Stutus field staff
-    VIEWED = "V"
-    NOT_VIEWED = "NV"
-    STATUS_CHOICES = [
-            (NOT_VIEWED, "Not viewed"),
-            (VIEWED, "Viewed"),
-            ]
-    status = models.CharField(
-            max_length=2,
-            choices=STATUS_CHOICES,
-            default=NOT_VIEWED,
-            )
-
-    def __str__(self):
-        return self.title

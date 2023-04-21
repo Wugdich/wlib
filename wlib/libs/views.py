@@ -126,15 +126,3 @@ def deleteBook(request, pk):
             "obj": book,
             }
     return render(request, 'delete.html', context)
-
-@login_required(login_url='login-page')
-def game_lib(request):
-    context = {
-            }
-    return render(request, 'libs/game_lib.html', context)
-
-@login_required(login_url='login-page')
-def movie_lib(request):
-    context = {
-            }
-    return render(request, 'libs/movie_lib.html', context)

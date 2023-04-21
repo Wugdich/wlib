@@ -62,7 +62,7 @@ def libs(request):
     return render(request, 'libs/libs.html', context)
 
 @login_required(login_url='login-page')
-def book_lib(request, username):
+def lib(request, username):
     q = request.GET.get('q') if request.GET.get('q') else ''
     query = (
             Q(title__icontains=q) |
@@ -74,7 +74,7 @@ def book_lib(request, username):
     context = {
             'books': books,
             }
-    return render(request, 'libs/book_lib.html', context)
+    return render(request, 'libs/lib.html', context)
 
 @login_required(login_url='login-page')
 def addBook(request):
@@ -85,7 +85,7 @@ def addBook(request):
             new_book = form.save(commit=False)
             new_book.user = request.user
             new_book.save()
-        return redirect('book-lib', request.user)
+        return redirect('lib', request.user)
 
     context = {
             'form': form, 
@@ -105,7 +105,7 @@ def updateBook(request, pk):
         form = forms.BookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
-        return redirect('book-lib', request.user)
+        return redirect('lib', request.user)
 
     context = {
             'form': form,
@@ -122,7 +122,7 @@ def deleteBook(request, pk):
 
     if request.method == 'POST':
         book.delete()
-        return redirect('book-lib', request.user)
+        return redirect('lib', request.user)
 
     context = {
             "obj": book,

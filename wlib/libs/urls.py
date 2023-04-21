@@ -7,13 +7,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', views.home, name='home'),
-    path('login-page', views.loginPage, name='login-page'),
-    path('logout-page', views.logoutPage, name='logout-page'),
-    path('register-page', views.registerPage, name='register-page'),
+    path('login', views.loginPage, name='login-page'),
+    path('logout', views.logoutPage, name='logout-page'),
+    path('register', views.registerPage, name='register-page'),
 
     path('libs', views.libs, name='libs'),
-    path('book-lib/add-book/', views.addBook, name='add-book'),
-    path('book-lib/<str:username>/', views.book_lib, name='book-lib'),
+    path('lib/add-book/', views.addBook, name='add-book'),
+    path('lib/<str:username>/', views.lib, name='lib'),
     path(
         'book-lib/<str:username>/profile/', 
         views.profilePage, 

@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.shortcuts import HttpResponse, redirect, render
 from django.contrib import messages
 from django.db.models import Q
@@ -53,6 +54,7 @@ def registerPage(request):
             }
     return render(request, 'libs/register_page.html', context)
 
+# TODO:libs and book_lib visible for anyone, but not editable
 @login_required(login_url='login-page')
 def libs(request):
     context = {
@@ -126,3 +128,10 @@ def deleteBook(request, pk):
             "obj": book,
             }
     return render(request, 'delete.html', context)
+
+def profilePage(request, username):
+    user = User.objects.get(username=username)
+    context = {
+            'user': user,
+            }
+    return render(request, 'libs/profile.html', context)
